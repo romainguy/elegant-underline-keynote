@@ -21,6 +21,11 @@ matches its text content, font, and font size.
 - `style`: must be `jagged` or `elegant`, specifies the style of underline
 - `color`: an sRGB color in hex form without any prefix (e.g. `FF00FF`)
 
+> **Note**
+> This tool tries to automatically place the generated underline on your slide, but
+> it is only an approximation. It works best when the text item box is tight around
+> the text, and text is left and top aligned.
+
 ### Standalone mode
 
 `elegant-underline [style] [color] [font name] [size in points] [text]`
@@ -49,7 +54,7 @@ visual clutter caused for instance when underlining text content with letters su
 as "p" or "g".
 
 > **Warning**
-> This feature is not yet available, but will be after macOS 13.0 is released
+> This feature is not yet available, but will be after macOS 13.0 is released.
 
 ![Elegant underline style](images/elegant.png)
 
