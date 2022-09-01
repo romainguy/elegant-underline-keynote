@@ -39,11 +39,19 @@ func toCGColor(_ color: UInt32) -> CGColor {
         alpha: 1.0)
 }
 
+func toCGColor(_ color: String) -> CGColor {
+    if let intColor = UInt32(color.replacingOccurrences(of: "#", with: ""), radix: 16) {
+        return toCGColor(intColor)
+    }
+    print("Using default color because of invalid color format:", color)
+    return CGColor(srgbRed: 1.0, green: 0.0, blue: 0.0, alpha: 0.0)
+}
+
 if CommandLine.arguments.count < 6 {
     if CommandLine.arguments.count < 3 {
         print("elegant-underline [style] [color] [font name] [size in points] [text]")
         print("   style: jagged, elegant")
-        print("   color: sRGB color in hex format FF00FF")
+        print("   color: sRGB color in hex format FF00FF or #FF00FF")
         exit(1)
     }
     let script: NSAppleScript = {
@@ -74,7 +82,7 @@ if CommandLine.arguments.count < 6 {
     }()
 
     pathStyle = CommandLine.arguments[1]
-    fontColor = toCGColor(UInt32(CommandLine.arguments[2], radix: 16)!)
+    fontColor = toCGColor(CommandLine.arguments[2])
 
     var error: NSDictionary? = nil
     if let result = script.executeAndReturnError(&error) as NSAppleEventDescriptor? {
@@ -92,7 +100,7 @@ if CommandLine.arguments.count < 6 {
     keynoteMode = true
 } else {
     pathStyle = CommandLine.arguments[1]
-    fontColor = toCGColor(UInt32(CommandLine.arguments[2], radix: 16)!)
+    fontColor = toCGColor(CommandLine.arguments[2])
     fontName = CommandLine.arguments[3] as CFString
     fontSize = CGFloat(Float(CommandLine.arguments[4]) ?? Float(72.0))
     text = CommandLine.arguments[5]
@@ -196,7 +204,7 @@ if keynoteMode {
     outUrl = URL(fileURLWithPath: "./elegant-underline.pdf")
 }
 
-print("Result in", outUrl)
+print("Result in", outUrl.path)
 
 var mediaBox = CGRect(
     x: CGFloat(0.0),
