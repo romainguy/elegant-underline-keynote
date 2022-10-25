@@ -4,7 +4,7 @@ A command line utility to generate fancier underlines for Apple Keynote. This to
 can be invoked in two different ways: in standalone mode, or in Keynote mode.
 
 > **Warning**
-> macOS 10.13 required.
+> macOS 13 required.
 
 ## Operating modes
 
