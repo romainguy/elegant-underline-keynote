@@ -161,8 +161,8 @@ case "jagged":
 
     path = jagged.copy(
         strokingWithWidth: fontUnderlineThickness / 2.0,
-        lineCap: CGLineCap.butt,
-        lineJoin: CGLineJoin.miter,
+        lineCap: .butt,
+        lineJoin: .miter,
         miterLimit: CGFloat(10.0)
     )
     boundingBox = path.boundingBox
@@ -175,18 +175,25 @@ case "elegant":
     )
     let underlinePath = CGPath(rect: underlineBounds, transform: nil)
 
-    let clipBounds = CGRect(
-        x: boundingBox.minX,
-        y: boundingBox.minY,
-        width: boundingBox.width,
-        height: fontUnderlinePosition
-    )
-    let clipPath = CGPath(rect: clipBounds, transform: nil)
+    // TODO: Try with this clipping path, it looks better in some cases
+//    let clipBounds = CGRect(
+//        x: boundingBox.minX,
+//        y: -boundingBox.height + fontUnderlinePosition,
+//        width: boundingBox.width,
+//        height: boundingBox.height
+//    )
+//    let clipPath = CGPath(rect: clipBounds, transform: nil)
 
-    // TODO: Finish when macOS 13.0 is available
-    // step 1: subtract clipPath from textPath
-    // step 2: get a filled path for the stroke of step 1
-    // step 3: subtract the stroked text path from underlinePath
+    let clippedText = path.intersection(underlinePath)
+    let strokedText = clippedText.copy(
+        strokingWithWidth: fontUnderlineThickness * 3.0,
+        lineCap: .butt,
+        lineJoin: .miter,
+        miterLimit: CGFloat(4.0)
+    )
+    let expandedText = strokedText.union(clippedText)
+    path = underlinePath.subtracting(expandedText)
+    boundingBox = path.boundingBox
 default:
     break
 }
