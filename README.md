@@ -3,6 +3,9 @@
 A command line utility to generate fancier underlines for Apple Keynote. This tool
 can be invoked in two different ways: in standalone mode, or in Keynote mode.
 
+> **Warning**
+> macOS 10.13 required.
+
 ## Operating modes
 
 In standalone mode, the tool will generate a PDF in the current directory. That PDF
@@ -52,9 +55,6 @@ IDEs. It is particularly useful when presenting code in a slide:
 This style produces an underline that never crosses any descenders, avoiding the
 visual clutter caused for instance when underlining text content with letters such
 as "p" or "g".
-
-> **Warning**
-> This feature is not yet available, but will be after macOS 13.0 is released.
 
 ![Elegant underline style](images/elegant.png)
 
